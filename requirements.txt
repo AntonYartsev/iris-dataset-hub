@@ -1,0 +1,8 @@
+# runtime dependencies for IRIS Embedded Python.
+# Installed into /usr/irissys/mgr/python by the Dockerfile; the full resolved set is pinned in constraints.txt
+datasets==5.0.1
+kagglehub==1.0.2
+# datasets 5.0.1 requires huggingface-hub<2.0
+huggingface-hub==1.33.0
+pyarrow==25.0.1
+pandas==3.0.6

@@ -1,0 +1,8 @@
+ // Build-time setup, executed in %SYS by `iris session IRIS -U %SYS`.
+ // Any failure terminates the session with exit status 1 so that `docker build` fails.
+ // Demo container only: keep the default _SYSTEM/SYS credentials usable without the forced first-login change.
+ set sc = ##class(Security.Users).UnExpireUserPasswords("*") if 'sc { write !,$SYSTEM.Status.GetErrorText(sc),! do $SYSTEM.Process.Terminate(, 1) }
+ // SQL facade dc.hub.Api (SQL functions dc_hub.load_hf / dc_hub.load_kaggle) in namespace USER.
+ zn "USER"
+ set sc = $SYSTEM.OBJ.LoadDir("/tmp/hub/cls", "ck", , 1) if 'sc { write !,$SYSTEM.Status.GetErrorText(sc),! do $SYSTEM.Process.Terminate(, 1) }
+ halt

@@ -1,0 +1,6 @@
+studyName,Sample Number,Individual ID,Date Egg,Culmen Length (mm),Sex,sex,Comments,2nd value
+PAL0708,1,N1A1,11/11/07,39.1,MALE,m,"Not enough blood, for isotopes",x
+PAL0708,2,N1A2,11/11/07,,FEMALE,NA,,y
+PAL0708,3,N2A1,11/16/07,40.3,.,.,"line one
+line two",z
+PAL0809,4,N2A2,11/16/07,36.7,NA,,"Zürich 東京 🙂 ""quoted""",
