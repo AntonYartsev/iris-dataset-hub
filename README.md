@@ -18,6 +18,9 @@ of the Kaggle dataset, `dc_hub_data.palmer_penguins_lter` and `dc_hub_data.palme
 it runs on plain IRIS Community: IRIS Embedded Python runs the Hugging Face `datasets` library,
 `kagglehub` and `pyarrow` inside the IRIS process
 
+because the loads are SQL functions, any SQL client can run them: the Management Portal,
+JDBC, ODBC or DB-API. The client needs no Python and no dataset library.
+
 ## Installation
 
 you need Docker with Compose v2, about 6 GB of free disk space and internet access
@@ -90,6 +93,28 @@ are listed as `notImported`
   `Culmen Length (mm)` → `culmen_length_mm`
 - tables are created only in schema `dc_hub_data`. Tables in other schemas are never dropped or
   changed
+
+## Verified datasets
+
+`tests/smoke.sh` loads these datasets on every run. Start with them to see the expected result.
+
+| Source | Reference | Result |
+| --- | --- | --- |
+| Hugging Face | `hitorilabs/iris`, split `train`, commit `fa62476c42edcf9259f895f43da1a7bf9e2697ae` | `dc_hub_data.iris`, 150 rows, 5 columns |
+| Kaggle | `parulpandey/palmer-archipelago-antarctica-penguin-data/versions/1` | `palmer_penguins_lter` and `palmer_penguins_size`, 344 rows each |
+| Kaggle | `uciml/iris/versions/<N>` | `<table>`, `<rows>` rows |
+| Kaggle | `<owner>/iris-dataset-various-format-types/versions/<N>` | `<tables>`, `<rows>` |
+| `<source>` | `<reference>` | `<result>` |
+| `<source>` | `<reference>` | `<result>` |
+
+This dataset is expected to fail, and the summary shows why:
+
+| Source | Reference | Result |
+| --- | --- | --- |
+| Kaggle | `rio2016/olympic-games` | `"status": "failed"`: `events.csv` is not UTF-8. The two tables loaded before it are listed in the summary |
+
+Other datasets work when they fit the limits below. Large datasets, nested columns, images,
+audio and dataset scripts are out of scope on purpose.
 
 ## Limitations
 
