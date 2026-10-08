@@ -23,7 +23,7 @@ it runs on plain IRIS Community: IRIS Embedded Python runs the Hugging Face `dat
 you need Docker with Compose v2, about 6 GB of free disk space and internet access
 
 ```bash
-git clone <repository URL> iris-dataset-hub
+git clone https://github.com/AntonYartsev/iris-dataset-hub.git iris-dataset-hub
 cd iris-dataset-hub
 docker compose up -d --build --wait
 ```
@@ -115,6 +115,18 @@ tests/smoke.sh
 `tests/smoke.sh` loads real datasets from both sources and checks ten loads that must fail
 cleanly, in about 30 seconds; it replaces `dc_hub_data.iris`, `palmer_penguins_lter` and
 `palmer_penguins_size`. Both need the running `iris` service and exit with 1 on failure
+
+## Prior art
+
+[iris-kaggle-socrata-generator](https://openexchange.intersystems.com/package/iris-kaggle-socrata-generator)
+(Open Exchange, 2022) installs a Kaggle dataset with the ObjectScript call `InstallDataset`.
+iris-dataset-hub differs in six points. The loads are SQL functions, `dc_hub.load_hf` and
+`dc_hub.load_kaggle`. Hugging Face is a second source. Parquet files and Hugging Face splits get
+their SQL types from the types the source declares. A CSV column is typed by all of its values, so
+one `00123` in the last row keeps the column as text. One `dc_hub.load_kaggle` call loads every
+CSV and Parquet file of a multi-file Kaggle version, one table per file. A bad argument, a
+Hugging Face image or nested column, or a dataset over the 100 MB limit stops the call with a
+`"status": "failed"` JSON summary before the download starts
 
 ## Dataset licensing
 
